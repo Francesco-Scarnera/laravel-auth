@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -46,7 +47,14 @@ class PostController extends Controller
         $request->validate($this->validationRules());
         $data = $request->all();
         $data['user_id'] = Auth::id();
+        //dd($data);
         $data['slug'] = Str::slug($data['title'], '-');
+        
+
+        // set image
+        if(!empty($data['path_img'])) {
+            $data['path_img'] = Storage::disk('public')->put('images', $data['path_img']);
+        }
 
         $newPost = new Post();
         $newPost->fill($data);
@@ -90,7 +98,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        $request->validate($this->validationRules());
+        //$request->validate($this->validationRules());
 
         $data = $request->all();
         $data['slug'] = Str::slug($data['title'], '-');
@@ -128,7 +136,8 @@ class PostController extends Controller
     {
         return [
             'title' => 'required', 
-            'body' =>'required'
+            'body' =>'required',
+            'path_img' => 'image'
         ];
     }
 }

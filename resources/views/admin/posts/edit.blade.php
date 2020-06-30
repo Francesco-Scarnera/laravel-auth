@@ -20,11 +20,11 @@
         
         <div class="form-group">
             <label for="title">Title</label>
-            <input class="form-control" type="text" id="title" value="{{ old('title', $post->title) }}">
+            <input class="form-control" type="text" id="title" name="title" value="{{ old('title', $post->title) }}">
         </div>
         <div class="form-group">
             <label for="body">Body</label>
-            <textarea class="form-control" type="body" id="body" value="{{ old('body', $post->body) }}"></textarea>
+            <textarea class="form-control" type="body" id="body" name="body" value="{{ old('body', $post->body) }}"></textarea>
         </div>
 
         <input class="btn btn-primary" type="submit" value="Update post">
